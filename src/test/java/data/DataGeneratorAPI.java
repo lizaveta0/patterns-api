@@ -35,10 +35,10 @@ public class DataGeneratorAPI {
         return faker.internet().password();
     }
 
-    public static Response createRequest(String login, String password, String status) {
+    public static Response createRequest(RegistrationDto registrationDto) {
         return given()
                 .spec(requestSpec)
-                .body(new RegistrationDto(login, password, status))
+                .body(registrationDto)
                 .when() // "когда"
                 .post("/api/system/users");// на какой путь относительно BaseUri отправляем запрос
     }
@@ -54,8 +54,8 @@ public class DataGeneratorAPI {
         private RegistrationUser() {
         }
 
-        public static RegistrationDto generateUser() {
-            return new RegistrationDto(generateLogin(), generatePassword(), "active");
+        public static RegistrationDto generateUser(String status) {
+            return new RegistrationDto(generateLogin(), generatePassword(), status);
         }
     }
 }
